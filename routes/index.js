@@ -1,25 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const Item = require('../models/Item');
+
+const listController = require('../controllers/listController');
+
+router.get('/healthcheck', async (req, res) => {
+  console.log('Api is running');
+  res.json({message: 'Api is running'})
+})
 
 router.get('/', async (req, res) => {
-  const items = await Item.find();
+  const items = await listController.getList();
   res.json(items);
 });
 
-router.post('/', async (req, res) => {
-  const newItem = new Item(req.body);
-  const item = await newItem.save();
-  res.json(item);
+router.post('/', async () => {
+  const newItem = await listController.crateList();
 });
 
-router.put('/:id', async (req, res) => {
-  const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
+router.put('/:id', async () => {
+  const updatedItem = await listController.editList();
   res.json(updatedItem);
 });
 
-router.delete('/:id', async (req, res) => {
-  const deletedItem = await Item.findByIdAndRemove(req.params.id);
+router.delete('/:id', async () => {
+  const deletedItem = await listController.removeList();
   res.json(deletedItem);
 });
 

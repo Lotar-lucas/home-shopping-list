@@ -1,10 +1,9 @@
 const express = require('express');
 // const bodyParser = require('body-parser');
-const itemRoutes = require('./routes/items');
+const listRoutes = require('./routes');
 
 const app = express();
 
-// app.use(bodyParser.json());
-app.use('/items', itemRoutes);
+app.use('', listRoutes);
 
 app.listen(3000, () => console.log('Server running on port 3000'));
