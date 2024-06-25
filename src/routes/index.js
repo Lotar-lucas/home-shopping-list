@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async () => {
-  await itemController.create();  
+  await itemController.item.create();  
 });
 
 router.put('/:id', async (req, res) => {
