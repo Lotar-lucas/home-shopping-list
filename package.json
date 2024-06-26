@@ -1,0 +1,23 @@
+{
+  "name": "home-shopping-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run start"
+  },
+  "keywords": [],
+  "author": "Lucas Lotar",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "joi": "^17.13.1",
+    "pg": "^8.11.5"
+  },
+  "devDependencies": {
+    "eslint": "^9.3.0",
+    "globals": "^15.3.0"
+  }
+}
