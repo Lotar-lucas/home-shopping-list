@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const itemRoutes = require('./src/routes');
 const cors = require('cors');
+require('dotenv').config({ debug: true })
+
 // const erroMiddleware = require('./src/middlewares/error');
 
 

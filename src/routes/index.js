@@ -2,13 +2,17 @@ const express = require('express');
 const router = express.Router();
 const itemController = require('../controllers/');
 
+router.get('/', async ( _, res) => {
+  res.json({message: 'API is run! '});
+});
+
 router.get('/', async (req, res) => {
   const items = await item.find();
   res.json(items);
 });
 
-router.post('/', async () => {
-  await itemController.item.create();  
+router.post('/', async (req, res) => {
+  return await itemController.item.create(req, res);  
 });
 
 router.put('/:id', async (req, res) => {
