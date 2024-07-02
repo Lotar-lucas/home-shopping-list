@@ -28,4 +28,4 @@ const deleteItem = async (id) => {
   return await pool.query('DELETE FROM item WHERE id = $1', [id]);
 };
 
-module.exports = { getItems, createItem, updateItem, deleteItem };
+module.exports = { getItems, createItem, updateItem, deleteItem, pool };
