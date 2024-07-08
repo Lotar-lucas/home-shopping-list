@@ -8,24 +8,93 @@ const pool = new Pool({
   port: process.env.DB_PORT
 });
 
+const getItemById = async ({id}) => {
+  const res = await pool.query(`
+    SELECT 
+      id, name, description, price, category_id as "categoryId" 
+    FROM item 
+    WHERE id = $1
+    `,
+    [id]);
+  return res.rows[0];
+};
+
 const getItems = async ({}) => {
-  const res = await pool.query('SELECT * FROM items');
+  const res = await pool.query(`
+    SELECT 
+      id,
+      name,
+      description,
+      price,
+      category_id as "categoryId"
+    FROM items
+    `
+  );
   return res.rows;
 };  
 
+const checkIfItemExists = async ({id}) => {
+  const res = await pool.query(`
+    SELECT 1 
+    FROM item 
+    WHERE id = $1
+    `,
+    [id]);
+  return res.rows[0];
+};
+
 const createItem = async ({ name, description, price, categoryId }) => {
   console.log(name, description, price, categoryId);
-  const res = await pool.query('INSERT INTO item (name, description, price, category_id) VALUES ($1, $2, $3, $4) RETURNING *', [name, description, price, categoryId]);
+  const res = await pool.query(`
+      INSERT INTO 
+        item (name, description, price, category_id) 
+      VALUES ($1, $2, $3, $4) 
+      RETURNING 
+        id,
+        name,
+        description,
+        price,
+        category_id as "categoryId"
+      `, 
+    [name, description, price, categoryId]);
   return res.rows[0];
 }
 
-const updateItem = async (id, item) => {
-  const res = await pool.query('UPDATE item SET name = $1, description = $2 WHERE id = $3 RETURNING *', [item.name, item.description, id]);
+const updateItem = async ({id, item}) => {
+  const res = await pool.query(`
+    UPDATE item 
+    SET 
+      name = $1,
+      description = $2
+    WHERE 
+      id = $3
+    RETURNING 
+      id,
+      name,
+      description,
+      price,
+      category_id as "categoryId"
+      `,
+    [item.name, item.description, id]
+  );
   return res.rows[0];
 };
 
-const deleteItem = async (id) => {
-  return await pool.query('DELETE FROM item WHERE id = $1', [id]);
+const deleteItem = async ({id}) => {
+  return await pool.query(`
+    DELETE 
+      FROM item 
+    WHERE id = $1
+    `,
+    [id]
+  );
 };
 
-module.exports = { getItems, createItem, updateItem, deleteItem };
+module.exports = { 
+  getItems,
+  createItem,
+  updateItem,
+  deleteItem,
+  checkIfItemExists,
+  getItemById
+};
