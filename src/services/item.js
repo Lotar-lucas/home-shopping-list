@@ -8,14 +8,16 @@ const pool = new Pool({
   port: process.env.DB_PORT
 });
 
-const getItemById = async ({id}) => {
+const getItemById = async ({ itemId }) => {
   const res = await pool.query(`
     SELECT 
       id, name, description, price, category_id as "categoryId" 
     FROM item 
     WHERE id = $1
     `,
-    [id]);
+    [itemId]);
+
+    console.log(itemId);
   return res.rows[0];
 };
 
@@ -33,15 +35,15 @@ const getItems = async ({}) => {
   return res.rows;
 };  
 
-const checkIfItemExists = async ({id}) => {
-  const res = await pool.query(`
-    SELECT 1 
-    FROM item 
-    WHERE id = $1
-    `,
-    [id]);
-  return res.rows[0];
-};
+// const checkIfItemExists = async ({id}) => {
+//   const res = await pool.query(`
+//     SELECT 1 
+//     FROM item 
+//     WHERE id = $1
+//     `,
+//     [id]);
+//   return res.rows[0];
+// };
 
 const createItem = async ({ name, description, price, categoryId }) => {
   console.log(name, description, price, categoryId);
@@ -60,14 +62,18 @@ const createItem = async ({ name, description, price, categoryId }) => {
   return res.rows[0];
 }
 
-const updateItem = async ({id, item}) => {
+const updateItem = async ({itemId, name, description, price, categoryId}) => {
+  console.log(itemId, name, description, price, categoryId);
+
   const res = await pool.query(`
     UPDATE item 
     SET 
       name = $1,
-      description = $2
+      description = $2,
+      price = $3,
+      category_id = $4
     WHERE 
-      id = $3
+      id = $5
     RETURNING 
       id,
       name,
@@ -75,7 +81,7 @@ const updateItem = async ({id, item}) => {
       price,
       category_id as "categoryId"
       `,
-    [item.name, item.description, id]
+    [name, description, price, categoryId, itemId]
   );
   return res.rows[0];
 };
@@ -95,6 +101,5 @@ module.exports = {
   createItem,
   updateItem,
   deleteItem,
-  checkIfItemExists,
   getItemById
 };
