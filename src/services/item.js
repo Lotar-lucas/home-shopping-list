@@ -11,13 +11,13 @@ const pool = new Pool({
 const getItemById = async ({ itemId }) => {
   const res = await pool.query(`
     SELECT 
-      id, name, description, price, category_id as "categoryId" 
+      id as "itemId", name, description, price, category_id as "categoryId" 
     FROM item 
     WHERE id = $1
     `,
     [itemId]);
 
-    console.log(itemId);
+    // console.log(itemId);
   return res.rows[0];
 };
 

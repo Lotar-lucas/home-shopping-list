@@ -1,3 +1,4 @@
+const { item } = require('.');
 const itemService = require('../services')
 
 const getById = async ({ itemId }) => {
@@ -13,22 +14,7 @@ const update = async (dateItems) => {
 
   if(!persistentItem) { throw new Error('Item not found');}
 
-
-  const entrySet = new Set(Object.entries(persistentItem));
-  console.log(entrySet); // Set { [ 'a', 1 ], [ 'b', 2 ], [ 'c', 3 ] }
-
-  const entrySet2 = new Set(Object.entries(dateItems));
-
-  console.log(entrySet2); // Set { [ 'a', 1 ], [ 'b', 2 ], [ 'c', 3 ] }
-
-
-
-
-
-  return await itemService.item.updateItem({
-    ...persistentItem,
-    ...dateItems.item
-  });
+  return await itemService.item.updateItem(Object.assign(persistentItem, dateItems));
 }
 
 
