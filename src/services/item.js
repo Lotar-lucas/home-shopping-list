@@ -17,11 +17,10 @@ const getItemById = async ({ itemId }) => {
     `,
     [itemId]);
 
-    // console.log(itemId);
   return res.rows[0];
 };
 
-const getItems = async ({}) => {
+const getItems = async () => {
   const res = await pool.query(`
     SELECT 
       id,
@@ -29,7 +28,7 @@ const getItems = async ({}) => {
       description,
       price,
       category_id as "categoryId"
-    FROM items
+    FROM item
     `
   );
   return res.rows;

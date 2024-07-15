@@ -6,6 +6,11 @@ const getById = async (req, res) => {
   res.status(200).json(item);
 }
 
+const getByAll = async (_req, res) => {
+  const item = await itemUseCase.item.getAll();
+  res.status(200).json(item);
+}
+
 const create = async (req, res) => {
   const {name, description, price = 0.00, categoryId = 1} = req.body;
   const item = await itemUseCase.item.create({name, description, price, categoryId});
@@ -23,9 +28,11 @@ const remove = async (req, res) => {
   res.status(204).json(itemDeleted)
 }
 
+
 module.exports = { 
   create,
   update,
   remove,
-  getById
+  getById,
+  getByAll
 }

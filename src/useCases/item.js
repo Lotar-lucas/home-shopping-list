@@ -5,6 +5,10 @@ const getById = async ({ itemId }) => {
   return await itemService.item.getItemById({ itemId });
 }
 
+const getAll = async () => {
+  return await itemService.item.getItems();
+};
+
 const create = async ({ name, description, price, categoryId }) => {
   return await itemService.item.createItem({name, description, price, categoryId});
 }
@@ -31,5 +35,6 @@ module.exports = {
   create,
   update,
   remove,
-  getById
+  getById,
+  getAll
 }

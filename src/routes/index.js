@@ -6,9 +6,14 @@ router.get('/healthcheck', async ( _, res) => {
   res.json({message: 'API is run! '});
 });
 
+router.get('/all', async (req, res) => {
+  return await itemController.item.getByAll(req, res);
+});
+
 router.get('/:id', async (req, res) => {
   return await itemController.item.getById(req, res);
 });
+
 
 router.post('/', async (req, res) => {
   return await itemController.item.create(req, res);  
