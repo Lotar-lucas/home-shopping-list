@@ -11,9 +11,14 @@ const pool = new Pool({
 const getItemById = async ({ itemId }) => {
   const res = await pool.query(`
     SELECT 
-      id as "itemId", name, description, price, category_id as "categoryId" 
+      id as "itemId",
+      name,
+      description,
+      price,
+      category_id as "categoryId" 
     FROM item 
-    WHERE id = $1
+    WHERE 
+      id = $1
     `,
     [itemId]);
 
@@ -61,7 +66,7 @@ const createItem = async ({ name, description, price, categoryId }) => {
   return res.rows[0];
 }
 
-const updateItem = async ({itemId, name, description, price, categoryId}) => {
+const updateItem = async ({ itemId, name, description, price, categoryId }) => {
   console.log(itemId, name, description, price, categoryId);
 
   const res = await pool.query(`
@@ -85,14 +90,18 @@ const updateItem = async ({itemId, name, description, price, categoryId}) => {
   return res.rows[0];
 };
 
-const deleteItem = async ({id}) => {
-  return await pool.query(`
+const deleteItem = async ({ id }) => {
+  console.log(id);
+
+  const res = await pool.query(`
     DELETE 
       FROM item 
     WHERE id = $1
     `,
     [id]
   );
+
+  return res.rows[0];
 };
 
 module.exports = { 

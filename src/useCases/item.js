@@ -23,12 +23,12 @@ const update = async (dateItems) => {
 
 
 const remove = async ({ itemId }) => {
-  // TODO: put logical exclusion in the project
-  const isDeleted = await itemService.item.getItemById({ itemId });
+  const item = await itemService.item.getItemById({ itemId });
 
-  if(!isDeleted) { throw new Error('item already excluded');}
+  if(!item) { throw new Error('item already deleted or not found');}
 
-  return await itemService.item.deleteItem({ itemId });
+
+  return await itemService.item.deleteItem({ id:item.itemId });
 }
 
 module.exports = { 

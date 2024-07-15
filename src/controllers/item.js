@@ -2,7 +2,6 @@ const itemUseCase = require('../useCases')
 
 const getById = async (req, res) => {
   const item = await itemUseCase.item.getById({ itemId: req.params.id });
-  // console.log(item);
   res.status(200).json(item);
 }
 
@@ -24,8 +23,8 @@ const update = async (req, res) => {
 }
 
 const remove = async (req, res) => {
-  const itemDeleted = await itemUseCase.item.remove({ itemId: req.params.id });
-  res.status(204).json(itemDeleted)
+  await itemUseCase.item.remove({ itemId: req.params.id });
+  res.status(201).json({message: 'Item deleted'});
 }
 
 
