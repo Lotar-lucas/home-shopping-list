@@ -3,9 +3,9 @@ const bodyParser = require('body-parser');
 const itemRoutes = require('./src/routes');
 const cors = require('cors');
 require('dotenv').config({ debug: true })
-
 // const erroMiddleware = require('./src/middlewares/error');
 
+const listRoutes = require('./routes');
 
 const app = express();
 app.use(bodyParser.json());
@@ -32,6 +32,7 @@ app.use(cors(corsOptions));
 
 // Routes
 app.use('/items', itemRoutes);
+app.use('', listRoutes);
 
 const port = isNaN(parseInt(process.env.PORT))? 3000 : process.env.PORT
 app.listen(port, () => console.info(`Server running on port ${process.env.PORT || 3000}`));

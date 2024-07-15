@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "local": "nodemon -r dotenv/config server.js"
+    "local": "nodemon -r dotenv/config server.js",
+    "dev": "npm run start"
   },
   "keywords": [],
   "author": "Lucas Lotar",
   "license": "ISC",
+  "type": "commonjs",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -20,6 +22,8 @@
     "pg": "^8.11.5"
   },
   "devDependencies": {
+    "eslint": "^9.3.0",
+    "globals": "^15.3.0",
     "jest": "^29.7.0",
     "supertest": "^7.0.0"
   }
